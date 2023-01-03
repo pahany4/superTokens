@@ -4,25 +4,28 @@ import { TypeInput } from "supertokens-node/types";
 import Dashboard from "supertokens-node/recipe/dashboard";
 
 export const SuperTokensConfig: TypeInput = {
+    framework: "express",
     supertokens: {
-        // this is the location of the SuperTokens core.
-        connectionURI: "https://try.supertokens.com",
+        // These are the connection details of the app you created on supertokens.com
+        connectionURI: "https://dev-bba353718b4911eda3c15f64faa152ce-ap-southeast-1.aws.supertokens.io:3569",
+        apiKey: "57yx3KT6EQclBJoz3JzCGuN3mnvAud",
     },
     appInfo: {
-        appName: "SuperTokens Demo App",
+        // learn more about this on https://supertokens.com/docs/session/appinfo
+        appName: "tokens",
         apiDomain: "http://localhost:3001",
         websiteDomain: "http://localhost:3000",
+        apiBasePath: "/auth",
+        websiteBasePath: "/auth"
     },
-    // recipeList contains all the modules that you want to
-    // use from SuperTokens. See the full list here: https://supertokens.com/docs/guides
     recipeList: [
         Passwordless.init({
-            contactMethod: "EMAIL_OR_PHONE",
             flowType: "USER_INPUT_CODE_AND_MAGIC_LINK",
+            contactMethod: "EMAIL_OR_PHONE"
         }),
-        Session.init(),
         Dashboard.init({
-            apiKey: "supertokens_is_awesome",
+            apiKey: "pahan"
         }),
-    ],
+        Session.init() // initializes session features
+    ]
 };
