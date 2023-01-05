@@ -4,6 +4,7 @@ import supertokens from "supertokens-node";
 import { verifySession } from "supertokens-node/recipe/session/framework/express";
 import { middleware, errorHandler, SessionRequest } from "supertokens-node/framework/express";
 import { SuperTokensConfig } from "./config";
+import jwt from "supertokens-node/recipe/jwt"
 
 supertokens.init(SuperTokensConfig);
 
@@ -30,6 +31,18 @@ app.get("/sessioninfo", verifySession(), async (req: SessionRequest, res) => {
         accessTokenPayload: session!.getAccessTokenPayload(),
     });
 });
+
+async function createJWT(payload: any) {
+    let jwtResposne = await jwt.createJWT({
+        ...payload,
+        source: "microservice"
+    });
+    if (jwtResposne.status === "OK") {
+        // Send JWT as Authorization header to M2
+        return jwtResposne.jwt;
+    }
+    throw new Error("Unable to create JWT. Should never come here.")
+}
 
 // In case of session related errors, this error handler
 // returns 401 to the client.

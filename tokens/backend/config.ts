@@ -2,13 +2,18 @@ import Passwordless from "supertokens-node/recipe/passwordless";
 import Session from "supertokens-node/recipe/session";
 import { TypeInput } from "supertokens-node/types";
 import Dashboard from "supertokens-node/recipe/dashboard";
+import * as dotenv from 'dotenv';
+import jwt from "supertokens-node/recipe/jwt"
+
+dotenv.config();
 
 export const SuperTokensConfig: TypeInput = {
     framework: "express",
     supertokens: {
         // These are the connection details of the app you created on supertokens.com
-        connectionURI: "https://dev-bba353718b4911eda3c15f64faa152ce-ap-southeast-1.aws.supertokens.io:3569",
-        apiKey: "57yx3KT6EQclBJoz3JzCGuN3mnvAud",
+        // @ts-ignore
+        connectionURI: process.env.connectionURI, // location of the core
+        apiKey: process.env.apiKey // provide the core's API key if configured
     },
     appInfo: {
         // learn more about this on https://supertokens.com/docs/session/appinfo
@@ -24,8 +29,10 @@ export const SuperTokensConfig: TypeInput = {
             contactMethod: "EMAIL_OR_PHONE"
         }),
         Dashboard.init({
-            apiKey: "pahan"
+            // @ts-ignore
+            apiKey: process.env.DashboardApiKey
         }),
-        Session.init() // initializes session features
+        Session.init(), // initializes session features
+        jwt.init()
     ]
 };
