@@ -6,6 +6,8 @@
         "start": "next start"
     },
     "dependencies": {
+        "@supabase/supabase-js": "^2.2.3",
+        "jsonwebtoken": "^9.0.0",
         "next": "latest",
         "nextjs-cors": "^2.1.2",
         "react": "^18.2.0",
