@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
-import { SessionAuth, useSessionContext } from 'supertokens-auth-react/recipe/session'
+import SessionReact, { SessionAuth, useSessionContext } from 'supertokens-auth-react/recipe/session'
 import {getSupabase} from "../utils/supabase";
+import SuperTokensReact from "supertokens-auth-react";
 
 export default function Home() {
     return (
@@ -16,6 +17,11 @@ export default function Home() {
 function ProtectedPage() {
     // retrieve the authenticated user's accessTokenPayload and userId from the sessionContext
     const session = useSessionContext()
+
+    async function logoutClicked() {
+        await SessionReact.signOut();
+        SuperTokensReact.redirectToAuth();
+    }
 
     const [userEmail, setEmail] = useState('')
     useEffect(() => {
@@ -54,6 +60,23 @@ function ProtectedPage() {
                     <br />
                     Your email retrieved from Supabase: {userEmail}
                 </p>
+                <div
+                    onClick={logoutClicked}
+                    style={{
+                        display: "flex",
+                        width: "116px",
+                        height: "42px",
+                        backgroundColor: "#000000",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#ffffff",
+                        fontWeight: "bold",
+                    }}
+                >
+                    SIGN OUT
+                </div>
             </main>
         </div>
     )
