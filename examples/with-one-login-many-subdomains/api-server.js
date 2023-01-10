@@ -71,6 +71,7 @@ app.get("/user-subdomain", verifySession(), async (req, res) => {
     const session = req.session;
     const userDetails = await EmailPassword.getUserById(session.getUserId());
     const subdomain = getUserDomain(userDetails.email);
+    console.log(subdomain)
     res.send({ subdomain });
 });
 

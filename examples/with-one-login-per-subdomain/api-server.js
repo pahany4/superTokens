@@ -37,7 +37,8 @@ supertokens.init({
                     // getUserDomain is your implementation
                     let userDomain = await getUserDomain(email);
 
-                    return `http://${userDomain}.example.com:${websitePort}/auth/reset-password`;
+                    //return `http://${userDomain}.example.com:${websitePort}/auth/reset-password`;
+                    return `http://b.example.com:${websitePort}/auth/reset-password`;
                 },
             },
         }),
