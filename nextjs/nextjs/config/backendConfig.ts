@@ -4,6 +4,7 @@ import { appInfo } from './appInfo'
 import { TypeInput } from "supertokens-node/types";
 import jwt from "jsonwebtoken";
 import Passwordless from "supertokens-node/recipe/passwordless";
+import Dashboard from "supertokens-node/recipe/dashboard";
 import {getSupabase} from "../utils/supabase";
 
 let supabase_signing_secret = process.env.SUPABASE_SIGNING_SECRET
@@ -14,8 +15,8 @@ export const backendConfig = (): TypeInput => {
         supertokens: {
             // These are the connection details of the app you created on supertokens.com
             //connectionURI: "https://dev-bba353718b4911eda3c15f64faa152ce-ap-southeast-1.aws.supertokens.io:3569",
-            connectionURI: "https://try.supertokens.com",
-            //apiKey: "57yx3KT6EQclBJoz3JzCGuN3mnvAud",
+            connectionURI: "https://dev-bba353718b4911eda3c15f64faa152ce-ap-southeast-1.aws.supertokens.io:3569",
+            apiKey: "57yx3KT6EQclBJoz3JzCGuN3mnvAud",
         },
         appInfo,
         /*recipeList: [
@@ -27,8 +28,8 @@ export const backendConfig = (): TypeInput => {
         ],*/
         recipeList: [
             Passwordless.init({
-                flowType: "MAGIC_LINK",
-                contactMethod: "EMAIL",
+                flowType: "USER_INPUT_CODE_AND_MAGIC_LINK",
+                contactMethod: "EMAIL_OR_PHONE",
                 override: {
                     apis: (originalImplementation) => {
                         return {
@@ -91,6 +92,9 @@ export const backendConfig = (): TypeInput => {
                         };
                     },
                 },
+            }),
+            Dashboard.init({
+                apiKey: "pahan"
             }),
         ],
         isInServerlessEnv: true,

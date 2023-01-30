@@ -36,7 +36,7 @@ function ProtectedPage() {
             // retrieve the user's name from the users table whose email matches the email in the JWT
             const { data } = await supabase.from('users').select('email').eq('user_id', session.userId)
 
-            if (data.length > 0) {
+            if (data?.length > 0) {
                 setEmail(data[0].email)
             }
         }
